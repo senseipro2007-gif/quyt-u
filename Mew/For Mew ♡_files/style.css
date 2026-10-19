@@ -1,0 +1,630 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+:root {
+  --bg: #fff9f7;
+  --paper: #fffdfb;
+  --rose: #d78ca0;
+  --rose-deep: #a45370;
+  --rose-light: #f3dce2;
+  --ink: #513c44;
+  --muted: #a38a8e;
+  --line: #ead9d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 8% 15%, #f8dfe6 0, transparent 36%),
+    radial-gradient(ellipse at 95% 80%, #f5e5d9 0, transparent 34%),
+    linear-gradient(140deg, #fffaf8, #fff5f4);
+  font-family: "Be Vietnam Pro", sans-serif;
+  overflow-x: hidden;
+}
+
+button, a {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ambient {
+  position: fixed;
+  z-index: -1;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: .24;
+  pointer-events: none;
+}
+
+.ambient-one {
+  top: 5%;
+  left: -210px;
+  background: #e9a9bd;
+}
+
+.ambient-two {
+  right: -200px;
+  bottom: 0;
+  background: #eed1c4;
+}
+
+/* Header thanh lịch */
+.topbar {
+  position: relative;
+  z-index: 10;
+  width: min(1120px, 90%);
+  height: 82px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eadbda;
+}
+
+.logo {
+  color: var(--ink);
+  text-decoration: none;
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+  letter-spacing: -2px;
+}
+
+.logo span {
+  color: var(--rose);
+}
+
+.top-label {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.music-button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 15px;
+  color: var(--rose-deep);
+  background: #fffdf9d9;
+  border: 1px solid #ead4d9;
+  border-radius: 40px;
+  box-shadow: 0 5px 20px #a453700b;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all .3s ease;
+}
+
+.music-button:hover {
+  background: #f9e8ed;
+  box-shadow: 0 7px 25px #a4537015;
+  transform: translateY(-2px);
+}
+
+#musicIcon {
+  display: inline-block;
+  font-size: 19px;
+}
+
+.music-button.playing #musicIcon {
+  animation: musicRotate 3s linear infinite;
+}
+
+.progress-track {
+  height: 2px;
+  background: #f1e4e1;
+}
+
+#progressBar {
+  height: 100%;
+  width: 20%;
+  background: linear-gradient(90deg, #e7b0c0, #a45370);
+  transition: width .65s ease;
+}
+
+/* Chuyển trang */
+main {
+  min-height: 75vh;
+}
+
+.page {
+  display: none;
+  width: 100%;
+  min-height: 75vh;
+  padding: 30px 22px 50px;
+}
+
+.page.active {
+  display: flex;
+  justify-content: center;
+  animation: cinematicIn .85s cubic-bezier(.2,.75,.25,1) both;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 630px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--rose);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  line-height: 2;
+}
+
+.hero-flower {
+  margin: 23px 0 0;
+  color: var(--rose);
+  font-size: 37px;
+  filter: drop-shadow(0 4px 8px #d78ca025);
+  animation: flowerSway 4s ease-in-out infinite;
+}
+
+h1, h2 {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 400;
+  letter-spacing: -1.5px;
+  line-height: 1.4;
+}
+
+h1 {
+  margin: 25px 0 16px;
+  font-size: clamp(38px, 7vw, 70px);
+}
+
+h1 em, h2 em {
+  color: var(--rose);
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -1px;
+}
+
+.description {
+  max-width: 450px;
+  color: #96777f;
+  font-size: 13px;
+  line-height: 2.1;
+}
+
+.description strong {
+  color: var(--rose-deep);
+  font-weight: 600;
+}
+
+.primary-button {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  margin-top: 25px;
+  padding: 15px 21px;
+  color: #fffdfb;
+  background: linear-gradient(120deg, #b96b86, #974760);
+  border: 1px solid #a45370;
+  box-shadow: 0 9px 26px #a4537021;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.primary-button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 60%;
+  height: 200%;
+  background: #ffffff25;
+  transform: rotate(25deg);
+  transition: left .5s;
+}
+
+.primary-button:hover::before {
+  left: 130%;
+}
+
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 13px 32px #a4537038;
+}
+
+.bottom-note {
+  position: absolute;
+  bottom: 28px;
+  color: #b29a9b;
+  font-size: 8px;
+  letter-spacing: 3px;
+}
+
+/* Nội dung các trang */
+.page-content {
+  width: min(700px, 100%);
+  margin: auto;
+  padding: 25px 0;
+  text-align: center;
+}
+
+.page-number {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  color: #b19a9b;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+}
+
+.ornament {
+  margin-top: 48px;
+  color: var(--rose);
+  font-size: 39px;
+  animation: flowerSway 4s ease-in-out infinite;
+}
+
+.page-content h2 {
+  margin: 20px 0;
+  font-size: clamp(31px, 5.3vw, 48px);
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+.body-copy {
+  max-width: 490px;
+  margin: 18px auto;
+  color: #8c7378;
+  font-size: 13px;
+  line-height: 2.15;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 130px;
+  margin: 28px auto;
+  color: var(--rose);
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* Khung kỷ niệm */
+.memory-art {
+  position: relative;
+  width: min(360px, 100%);
+  height: 270px;
+  margin: 35px auto;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #f0d7dc;
+  background:
+    radial-gradient(ellipse at center, #fffaf7 0, transparent 55%),
+    linear-gradient(140deg, #f6e4e0, #ecd0d8);
+  box-shadow: 0 15px 40px #a453700b;
+}
+
+.memory-art::before,
+.memory-art::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 245px;
+  border: 1px solid #d6a6b1;
+  border-radius: 50%;
+}
+
+.memory-art::before {
+  transform: rotate(35deg);
+}
+
+.memory-art::after {
+  transform: rotate(-35deg);
+}
+
+.orbit {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border: 1px solid #ffffffb0;
+  border-radius: 50%;
+}
+
+.orbit-b {
+  width: 150px;
+  height: 150px;
+}
+
+.memory-heart {
+  z-index: 1;
+  color: #b96883;
+  font-family: "Playfair Display", serif;
+  font-size: 83px;
+  animation: heartbeat 3s ease-in-out infinite;
+}
+
+.memory-art > span {
+  position: absolute;
+  bottom: 17px;
+  z-index: 2;
+  color: #9f727d;
+  font-family: "Playfair Display", serif;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.handwriting {
+  margin-top: 25px;
+  color: var(--rose);
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  font-style: italic;
+}
+
+/* Lá thư */
+.letter-paper {
+  position: relative;
+  margin-top: 30px;
+  padding: clamp(25px, 6vw, 60px);
+  text-align: left;
+  background:
+    radial-gradient(ellipse at 0 0, #fdf1e9 0, transparent 40%),
+    #fffdf9;
+  border: 1px solid #eadbd5;
+  box-shadow: 0 25px 70px #875b5212;
+}
+
+.paper-top,
+.paper-bottom {
+  display: flex;
+  justify-content: space-between;
+  color: #b49b98;
+  font-size: 8px;
+  letter-spacing: 1.8px;
+}
+
+.paper-top {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #eaded8;
+}
+
+.letter-flower {
+  margin-top: 30px;
+  color: var(--rose);
+  text-align: center;
+  font-size: 29px;
+}
+
+.letter-paper h2 {
+  margin: 15px 0 32px;
+  text-align: center;
+  font-size: clamp(29px, 5vw, 43px);
+  line-height: 1.5;
+}
+
+.letter-body {
+  color: #7d6667;
+  font-size: 13px;
+  line-height: 2.2;
+}
+
+.letter-body p {
+  margin: 0 0 20px;
+}
+
+.signature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 9px;
+  margin-top: 35px;
+  color: #9d7b7d;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+}
+
+.signature strong {
+  color: var(--rose-deep);
+  font-size: 19px;
+}
+
+.paper-bottom {
+  justify-content: center;
+  margin-top: 35px;
+  padding-top: 18px;
+  border-top: 1px solid #eaded8;
+}
+
+/* Trang kết thúc */
+.ending-heart {
+  color: var(--rose);
+  font-size: 45px;
+  animation: heartbeat 2.5s ease-in-out infinite;
+}
+
+.ending .final-signature {
+  margin-top: 30px;
+  color: var(--rose-deep);
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.ending-flower {
+  margin-top: 20px;
+  color: var(--rose);
+  font-size: 31px;
+  animation: flowerSway 4s ease-in-out infinite;
+}
+
+.centered {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+.navigation .primary-button {
+  margin-top: 0;
+}
+
+.text-button {
+  padding: 10px 0;
+  color: #a27d87;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.text-button:hover {
+  color: var(--rose-deep);
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  padding: 24px 10px;
+  border-top: 1px solid var(--line);
+  color: #ae9694;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+/* Hoa rơi */
+#petalLayer,
+#heartLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  top: -40px;
+  color: #d98ba1;
+  opacity: .72;
+  user-select: none;
+  will-change: transform;
+  animation: petalFall linear forwards;
+  text-shadow: 0 2px 8px #d78ca020;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -35px;
+  color: #d78ca0;
+  animation: heartFloat linear forwards;
+}
+
+/* Hiệu ứng */
+@keyframes cinematicIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotate(0);
+    opacity: 0;
+  }
+  12% { opacity: .75; }
+  50% {
+    transform: translate3d(45px, 50vh, 0) rotate(250deg);
+  }
+  100% {
+    transform: translate3d(-35px, 110vh, 0) rotate(560deg);
+    opacity: 0;
+  }
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(0) scale(.7);
+    opacity: 0;
+  }
+  15% { opacity: .7; }
+  100% {
+    transform: translateY(-110vh) scale(1.2) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.12); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.08); }
+}
+
+@keyframes flowerSway {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+
+@keyframes musicRotate {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+  .topbar { height: 68px; }
+  .top-label { display: none; }
+  .hero { min-height: 570px; }
+  .page { padding: 18px 17px 30px; }
+  .page-content h2 { line-height: 1.55; }
+  .memory-art { height: 245px; }
+  .letter-paper { padding: 24px 20px; }
+  .letter-body { font-size: 12px; }
+  .navigation { margin-top: 30px; }
+  footer { gap: 12px; font-size: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

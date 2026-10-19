@@ -1,0 +1,488 @@
+
+"use strict";
+
+/* =========================================
+   1. LẤY CÁC PHẦN TỬ
+========================================= */
+
+const pages = Array.from(document.querySelectorAll(".page"));
+const progressBar = document.getElementById("progressBar");
+const petalLayer = document.getElementById("petalLayer");
+const heartLayer = document.getElementById("heartLayer");
+
+const homeLogo = document.getElementById("homeLogo");
+const restartButton = document.getElementById("restartButton");
+
+let currentPage = 0;
+let petalTimer = null;
+let heartTimer = null;
+
+/* Tạo lớp hiệu ứng nếu HTML chưa có */
+function createLayer(id) {
+  let layer = document.getElementById(id);
+
+  if (!layer) {
+    layer = document.createElement("div");
+    layer.id = id;
+    layer.setAttribute("aria-hidden", "true");
+    document.body.appendChild(layer);
+  }
+
+  return layer;
+}
+
+const petals = petalLayer || createLayer("petalLayer");
+const hearts = heartLayer || createLayer("heartLayer");
+
+/* =========================================
+   2. KHỞI TẠO CSS HIỆU ỨNG
+   Có thể chạy kể cả khi chưa thêm CSS mới
+========================================= */
+
+const animationCSS = document.createElement("style");
+
+animationCSS.textContent = `
+  #petalLayer,
+  #heartLayer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .falling-petal {
+    position: absolute;
+    top: -50px;
+    display: block;
+    color: #df91aa;
+    opacity: .85;
+    user-select: none;
+    will-change: transform;
+    animation: fallingPetal var(--fall-duration, 9s)
+               linear forwards;
+    filter: drop-shadow(0 2px 3px #d78ca020);
+  }
+
+  .falling-petal::before {
+    content: "";
+  }
+
+  .flying-heart {
+    position: absolute;
+    bottom: -35px;
+    color: #d78ca0;
+    user-select: none;
+    animation: flyingHeart var(--heart-duration, 8s)
+               ease-in forwards;
+  }
+
+  @keyframes fallingPetal {
+    0% {
+      transform: translate3d(0, -5vh, 0)
+                 rotate(0deg) scale(.8);
+      opacity: 0;
+    }
+    12% { opacity: .85; }
+    30% {
+      transform: translate3d(35px, 30vh, 0)
+                 rotate(100deg) scale(1);
+    }
+    60% {
+      transform: translate3d(-30px, 65vh, 0)
+                 rotate(260deg) scale(.95);
+    }
+    100% {
+      transform: translate3d(45px, 112vh, 0)
+                 rotate(500deg) scale(.75);
+      opacity: 0;
+    }
+  }
+
+  @keyframes flyingHeart {
+    0% {
+      transform: translateY(0) scale(.6) rotate(-10deg);
+      opacity: 0;
+    }
+    15% { opacity: .7; }
+    100% {
+      transform: translateY(-110vh) scale(1.15) rotate(25deg);
+      opacity: 0;
+    }
+  }
+
+  .page.active {
+    animation: pageEntrance .7s ease both;
+  }
+
+  .page.active .eyebrow,
+  .page.active .page-number {
+    animation: elementEntrance .6s .08s both;
+  }
+
+  .page.active h1,
+  .page.active h2 {
+    animation: titleEntrance .85s .12s both;
+  }
+
+  .page.active .description,
+  .page.active .body-copy {
+    animation: elementEntrance .75s .22s both;
+  }
+
+  .page.active .primary-button {
+    animation: elementEntrance .7s .3s both;
+  }
+
+  @keyframes pageEntrance {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes elementEntrance {
+    from {
+      opacity: 0;
+      transform: translateY(13px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes titleEntrance {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .falling-petal,
+    .flying-heart,
+    .page.active,
+    .page.active * {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+`;
+
+document.head.appendChild(animationCSS);
+
+/* =========================================
+   3. CHUYỂN TRANG
+========================================= */
+
+function showPage(index) {
+  if (!pages.length) {
+    console.warn("Không tìm thấy phần tử .page trong HTML.");
+    return;
+  }
+
+  // Giới hạn trang hợp lệ
+  index = Math.max(0, Math.min(index, pages.length - 1));
+
+  // Không làm gì nếu đã ở trang đó
+  if (index === currentPage && pages[index].classList.contains("active")) {
+    return;
+  }
+
+  currentPage = index;
+
+  pages.forEach((page, i) => {
+    page.classList.toggle("active", i === currentPage);
+    page.setAttribute(
+      "aria-hidden",
+      i === currentPage ? "false" : "true"
+    );
+  });
+
+  // Cập nhật thanh tiến trình
+  if (progressBar) {
+    const percentage = ((currentPage + 1) / pages.length) * 100;
+    progressBar.style.width = percentage + "%";
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+// Nút trang tiếp theo
+document.querySelectorAll("[data-next]").forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(currentPage + 1);
+  });
+});
+
+// Nút quay lại
+document.querySelectorAll("[data-prev]").forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(currentPage - 1);
+  });
+});
+
+// Logo về trang đầu
+if (homeLogo) {
+  homeLogo.addEventListener("click", event => {
+    event.preventDefault();
+    showPage(0);
+  });
+}
+
+// Nút đọc lại
+if (restartButton) {
+  restartButton.addEventListener("click", () => {
+    showPage(0);
+  });
+}
+
+// Điều khiển bằng bàn phím
+document.addEventListener("keydown", event => {
+  const tag = document.activeElement?.tagName;
+
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+  if (event.key === "ArrowRight") {
+    showPage(currentPage + 1);
+  }
+
+  if (event.key === "ArrowLeft") {
+    showPage(currentPage - 1);
+  }
+});
+
+/* =========================================
+   4. TẠO CÁNH HOA RƠI
+========================================= */
+
+// Kết hợp hoa nhỏ, cánh hoa và hoa đào cách điệu
+const petalSymbols = ["❀", "✿", "❁", "❋", "✽", "❃"];
+
+function createPetal() {
+  if (document.hidden) return;
+
+  // Giới hạn số phần tử để đỡ nặng máy
+  if (petals.childElementCount >= 45) return;
+
+  const petal = document.createElement("span");
+  petal.className = "falling-petal";
+  petal.textContent =
+    petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+
+  const duration = 7 + Math.random() * 7;
+  const size = 12 + Math.random() * 15;
+
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.fontSize = size + "px";
+  petal.style.setProperty("--fall-duration", duration + "s");
+
+  // Mỗi cánh có tốc độ, kích thước và hướng khác nhau
+  petal.style.animationDelay = (Math.random() * 1.5) + "s";
+  petal.style.opacity = (0.35 + Math.random() * 0.5).toString();
+
+  petals.appendChild(petal);
+
+  // Xóa phần tử sau khi animation kết thúc
+  petal.addEventListener("animationend", () => {
+    petal.remove();
+  }, { once: true });
+}
+
+/* =========================================
+   5. TRÁI TIM BAY LÊN
+========================================= */
+
+function createHeart() {
+  if (document.hidden) return;
+  if (hearts.childElementCount >= 10) return;
+
+  const heart = document.createElement("span");
+  heart.className = "flying-heart";
+  heart.textContent = Math.random() > 0.5 ? "♡" : "♥";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (12 + Math.random() * 15) + "px";
+  heart.style.setProperty(
+    "--heart-duration",
+    (7 + Math.random() * 5) + "s"
+  );
+
+  hearts.appendChild(heart);
+
+  heart.addEventListener("animationend", () => {
+    heart.remove();
+  }, { once: true });
+}
+
+/* =========================================
+   6. KHỞI ĐỘNG
+========================================= */
+
+function initWebsite() {
+  if (pages.length > 0) {
+    pages.forEach((page, i) => {
+      page.classList.toggle("active", i === 0);
+      page.setAttribute("aria-hidden", i === 0 ? "false" : "true");
+    });
+
+    currentPage = 0;
+
+    if (progressBar) {
+      progressBar.style.width = (100 / pages.length) + "%";
+    }
+  }
+
+  // Tạo vài cánh hoa ngay khi mở trang
+  for (let i = 0; i < 9; i++) {
+    setTimeout(createPetal, i * 180);
+  }
+
+  // Chạy hiệu ứng liên tục
+  if (!petalTimer) {
+    petalTimer = setInterval(createPetal, 450);
+  }
+
+  if (!heartTimer) {
+    heartTimer = setInterval(createHeart, 1800);
+  }
+
+  console.log("Website 20/10 đã khởi chạy 🌸");
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initWebsite, { once: true });
+} else {
+  initWebsite();
+}
+
+
+
+/* ===== CÁNH HOA ANH ĐÀO RƠI THẬT 🌸 ===== */
+
+(() => {
+  // Tạo lớp cánh hoa ở trên nền, nhưng không chặn thao tác bấm
+  let layer = document.getElementById("petalLayer");
+
+  if (!layer) {
+    layer = document.createElement("div");
+    layer.id = "petalLayer";
+    document.body.appendChild(layer);
+  }
+
+  Object.assign(layer.style, {
+    position: "fixed",
+    inset: "0",
+    overflow: "hidden",
+    pointerEvents: "none",
+    zIndex: "999",
+    display: "block"
+  });
+
+  const style = document.createElement("style");
+  style.textContent = `
+    .real-petal {
+      position: absolute;
+      top: -35px;
+      width: 13px;
+      height: 19px;
+      border-radius: 90% 10% 75% 25% / 65% 25% 75% 35%;
+      background:
+        radial-gradient(ellipse at 30% 25%,
+          #fff0f5 0%,
+          #ffd0df 28%,
+          #f39ab8 68%,
+          #d86d96 100%);
+      box-shadow: 0 1px 4px #c85b8230;
+      opacity: 0;
+      will-change: transform, top;
+      animation: realPetalFall var(--duration) linear forwards;
+    }
+
+    .real-petal::after {
+      content: "";
+      position: absolute;
+      left: 48%;
+      top: 15%;
+      width: 1px;
+      height: 70%;
+      background: #fff8;
+      transform: rotate(-12deg);
+    }
+
+    @keyframes realPetalFall {
+      0% {
+        transform: translate3d(0, -30px, 0) rotate(0deg);
+        opacity: 0;
+      }
+      8% { opacity: .9; }
+      25% {
+        transform: translate3d(35px, 25vh, 0) rotate(100deg);
+      }
+      50% {
+        transform: translate3d(-25px, 52vh, 0) rotate(240deg);
+      }
+      75% {
+        transform: translate3d(40px, 80vh, 0) rotate(390deg);
+      }
+      92% { opacity: .8; }
+      100% {
+        transform: translate3d(-15px, 110vh, 0) rotate(560deg);
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .real-petal { animation-duration: 10s !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  function dropPetal() {
+    if (document.hidden || layer.childElementCount >= 65) return;
+
+    const petal = document.createElement("span");
+    petal.className = "real-petal";
+
+    const duration = 7 + Math.random() * 6;
+    const size = 9 + Math.random() * 10;
+
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.width = size + "px";
+    petal.style.height = size * 1.45 + "px";
+    petal.style.setProperty("--duration", duration + "s");
+
+    // Mỗi cánh có màu và hướng xoay hơi khác nhau
+    const colors = [
+      ["#fff0f5", "#f39ab8", "#d86d96"],
+      ["#ffe6ee", "#f6a6c1", "#e47ca2"],
+      ["#fff5f8", "#ffc0d4", "#df83a5"]
+    ];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    petal.style.background =
+      `radial-gradient(ellipse at 30% 25%, ${color[0]}, ${color[1]} 60%, ${color[2]})`;
+
+    layer.appendChild(petal);
+
+    petal.addEventListener("animationend", () => petal.remove(), {
+      once: true
+    });
+  }
+
+  // Cho cánh hoa xuất hiện ngay khi mở trang
+  for (let i = 0; i < 18; i++) {
+    setTimeout(dropPetal, i * 160);
+  }
+
+  // Duy trì mưa cánh hoa
+  setInterval(dropPetal, 230);
+})();

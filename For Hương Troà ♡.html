@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://project-8746123245605781687.web.app/ -->
+<html lang="vi"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f6">
+  <meta name="description" content="Một món quà nhỏ dành riêng cho Tuyết Mai.">
+  <title>For Mew ♡</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./For Mew ♡_files/css2" rel="stylesheet">
+
+  <link rel="stylesheet" href="./For Mew ♡_files/style.css">
+
+  <style>
+    /* Bổ sung giao diện và bảo đảm tiếng Việt hiển thị rõ */
+    body {
+      font-family: "Be Vietnam Pro", sans-serif;
+    }
+
+    h1, h2 {
+      font-family: "Be Vietnam Pro", sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    h1 em, h2 em {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      color: #d78ca0;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    .page-content {
+      width: min(700px, 100%);
+    }
+
+    .letter-paper {
+      position: relative;
+    }
+
+    .hero-flower,
+    .ornament,
+    .ending-flower {
+      text-shadow: 0 4px 20px #d78ca033;
+    }
+
+    .small-caption {
+      color: #a78a8d;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .memory-note {
+      max-width: 460px;
+      margin: 18px auto;
+      padding: 16px 20px;
+      border-left: 2px solid #dca5b5;
+      background: #fffaf7b8;
+      color: #8c7378;
+      text-align: left;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .page-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 24px auto 0;
+    }
+
+    .page-dot {
+      width: 6px;
+      height: 6px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #e7cbd1;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+
+    .page-dot.active {
+      width: 22px;
+      border-radius: 20px;
+      background: #b66c85;
+    }
+
+    .page-dot:focus-visible,
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid #b66c85;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: clamp(34px, 9vw, 52px);
+      }
+
+      h2 {
+        font-size: clamp(28px, 7vw, 40px);
+      }
+
+      .description,
+      .body-copy {
+        font-size: 12px;
+      }
+    }
+  </style>
+<script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="5ee300d4-ca3b-482c-aebb-9b2f7f79c44f" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"></script><script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="5ee300d4-ca3b-482c-aebb-9b2f7f79c44f" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/101.js"></script><style>
+  #petalLayer,
+  #heartLayer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .falling-petal {
+    position: absolute;
+    top: -50px;
+    display: block;
+    color: #df91aa;
+    opacity: .85;
+    user-select: none;
+    will-change: transform;
+    animation: fallingPetal var(--fall-duration, 9s)
+               linear forwards;
+    filter: drop-shadow(0 2px 3px #d78ca020);
+  }
+
+  .falling-petal::before {
+    content: "";
+  }
+
+  .flying-heart {
+    position: absolute;
+    bottom: -35px;
+    color: #d78ca0;
+    user-select: none;
+    animation: flyingHeart var(--heart-duration, 8s)
+               ease-in forwards;
+  }
+
+  @keyframes fallingPetal {
+    0% {
+      transform: translate3d(0, -5vh, 0)
+                 rotate(0deg) scale(.8);
+      opacity: 0;
+    }
+    12% { opacity: .85; }
+    30% {
+      transform: translate3d(35px, 30vh, 0)
+                 rotate(100deg) scale(1);
+    }
+    60% {
+      transform: translate3d(-30px, 65vh, 0)
+                 rotate(260deg) scale(.95);
+    }
+    100% {
+      transform: translate3d(45px, 112vh, 0)
+                 rotate(500deg) scale(.75);
+      opacity: 0;
+    }
+  }
+
+  @keyframes flyingHeart {
+    0% {
+      transform: translateY(0) scale(.6) rotate(-10deg);
+      opacity: 0;
+    }
+    15% { opacity: .7; }
+    100% {
+      transform: translateY(-110vh) scale(1.15) rotate(25deg);
+      opacity: 0;
+    }
+  }
+
+  .page.active {
+    animation: pageEntrance .7s ease both;
+  }
+
+  .page.active .eyebrow,
+  .page.active .page-number {
+    animation: elementEntrance .6s .08s both;
+  }
+
+  .page.active h1,
+  .page.active h2 {
+    animation: titleEntrance .85s .12s both;
+  }
+
+  .page.active .description,
+  .page.active .body-copy {
+    animation: elementEntrance .75s .22s both;
+  }
+
+  .page.active .primary-button {
+    animation: elementEntrance .7s .3s both;
+  }
+
+  @keyframes pageEntrance {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes elementEntrance {
+    from {
+      opacity: 0;
+      transform: translateY(13px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes titleEntrance {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .falling-petal,
+    .flying-heart,
+    .page.active,
+    .page.active * {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+</style><style>
+    .real-petal {
+      position: absolute;
+      top: -35px;
+      width: 13px;
+      height: 19px;
+      border-radius: 90% 10% 75% 25% / 65% 25% 75% 35%;
+      background:
+        radial-gradient(ellipse at 30% 25%,
+          #fff0f5 0%,
+          #ffd0df 28%,
+          #f39ab8 68%,
+          #d86d96 100%);
+      box-shadow: 0 1px 4px #c85b8230;
+      opacity: 0;
+      will-change: transform, top;
+      animation: realPetalFall var(--duration) linear forwards;
+    }
+
+    .real-petal::after {
+      content: "";
+      position: absolute;
+      left: 48%;
+      top: 15%;
+      width: 1px;
+      height: 70%;
+      background: #fff8;
+      transform: rotate(-12deg);
+    }
+
+    @keyframes realPetalFall {
+      0% {
+        transform: translate3d(0, -30px, 0) rotate(0deg);
+        opacity: 0;
+      }
+      8% { opacity: .9; }
+      25% {
+        transform: translate3d(35px, 25vh, 0) rotate(100deg);
+      }
+      50% {
+        transform: translate3d(-25px, 52vh, 0) rotate(240deg);
+      }
+      75% {
+        transform: translate3d(40px, 80vh, 0) rotate(390deg);
+      }
+      92% { opacity: .8; }
+      100% {
+        transform: translate3d(-15px, 110vh, 0) rotate(560deg);
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .real-petal { animation-duration: 10s !important; }
+    }
+  </style></head>
+
+<body __processed_596f16ad-e73d-4a27-bbbc-438bf6492a1e__="true" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJUSUtUT0siOiJlbmFibGVkIiwiTElOS0VESU4iOiJlbmFibGVkIiwiQ09ORklHIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjIuMy4wIiwic2NvcmUiOjIwMzAwMH1d">
+  <!-- Nền trang -->
+  <div class="ambient ambient-one" aria-hidden="true" bis_skin_checked="1"></div>
+  <div class="ambient ambient-two" aria-hidden="true" bis_skin_checked="1"></div>
+
+  <!-- JavaScript tự tạo cánh hoa và trái tim trong hai lớp này -->
+  <div id="petalLayer" aria-hidden="true" bis_skin_checked="1" style="position: fixed; inset: 0px; overflow: hidden; pointer-events: none; z-index: 999; display: block;"><span class="real-petal" style="left: 31.6792vw; width: 17.4781px; height: 25.3432px; --duration: 7.994418709149956s; background: radial-gradient(at 30% 25%, rgb(255, 230, 238), rgb(246, 166, 193) 60%, rgb(228, 124, 162));"></span><span class="real-petal" style="left: 79.2567vw; width: 12.0352px; height: 17.451px; --duration: 7.011591806614733s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="falling-petal" style="left: 70.9791vw; font-size: 18.6675px; --fall-duration: 8.895082209856085s; animation-delay: 0.229607s; opacity: 0.673593;">❃</span><span class="real-petal" style="left: 91.4735vw; width: 13.5953px; height: 19.7132px; --duration: 12.954095385739945s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="real-petal" style="left: 79.8403vw; width: 15.1406px; height: 21.9539px; --duration: 9.555843074507266s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="falling-petal" style="left: 20.8272vw; font-size: 19.0398px; --fall-duration: 12.120319517685097s; animation-delay: 1.21248s; opacity: 0.56219;">✽</span><span class="real-petal" style="left: 40.2698vw; width: 9.42954px; height: 13.6728px; --duration: 9.100518843947492s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="real-petal" style="left: 56.6298vw; width: 10.279px; height: 14.9045px; --duration: 8.971656435161623s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="falling-petal" style="left: 85.6462vw; font-size: 22.6388px; --fall-duration: 9.089373959868777s; animation-delay: 0.0696925s; opacity: 0.39319;">❋</span><span class="real-petal" style="left: 7.03972vw; width: 14.2661px; height: 20.6859px; --duration: 11.182140165523926s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="real-petal" style="left: 73.2752vw; width: 12.8448px; height: 18.6249px; --duration: 7.7385339397212265s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="falling-petal" style="left: 32.4654vw; font-size: 21.2px; --fall-duration: 9.878658288334295s; animation-delay: 0.404892s; opacity: 0.401773;">❀</span><span class="real-petal" style="left: 55.0063vw; width: 14.5436px; height: 21.0882px; --duration: 12.068446837446562s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="real-petal" style="left: 47.0099vw; width: 16.8344px; height: 24.4099px; --duration: 8.54331230172533s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="falling-petal" style="left: 89.4944vw; font-size: 20.8823px; --fall-duration: 10.08369145212971s; animation-delay: 1.15806s; opacity: 0.579111;">❁</span><span class="real-petal" style="left: 44.4132vw; width: 18.0168px; height: 26.1244px; --duration: 8.244143187765584s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="real-petal" style="left: 29.8239vw; width: 11.4879px; height: 16.6574px; --duration: 7.274715355476355s; background: radial-gradient(at 30% 25%, rgb(255, 230, 238), rgb(246, 166, 193) 60%, rgb(228, 124, 162));"></span><span class="falling-petal" style="left: 59.2843vw; font-size: 21.0175px; --fall-duration: 10.611619300052245s; animation-delay: 0.352448s; opacity: 0.838284;">❁</span><span class="real-petal" style="left: 39.4395vw; width: 13.6971px; height: 19.8608px; --duration: 11.991312914911417s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="falling-petal" style="left: 7.20636vw; font-size: 12.7738px; --fall-duration: 7.678441023988555s; animation-delay: 0.201871s; opacity: 0.585774;">❋</span><span class="real-petal" style="left: 17.115vw; width: 15.7555px; height: 22.8455px; --duration: 10.893710068432869s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="real-petal" style="left: 38.9685vw; width: 13.2077px; height: 19.1512px; --duration: 10.990123748616213s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="falling-petal" style="left: 39.8679vw; font-size: 20.545px; --fall-duration: 11.505751096401642s; animation-delay: 0.985087s; opacity: 0.499927;">❃</span><span class="real-petal" style="left: 80.8946vw; width: 10.3414px; height: 14.995px; --duration: 11.113191382712557s; background: radial-gradient(at 30% 25%, rgb(255, 245, 248), rgb(255, 192, 212) 60%, rgb(223, 131, 165));"></span><span class="real-petal" style="left: 37.7695vw; width: 9.38526px; height: 13.6086px; --duration: 12.841383949043848s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="falling-petal" style="left: 30.3921vw; font-size: 22.1448px; --fall-duration: 10.267512227187883s; animation-delay: 1.10775s; opacity: 0.750101;">❀</span><span class="real-petal" style="left: 97.3658vw; width: 18.0278px; height: 26.1403px; --duration: 8.623859289046159s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span><span class="real-petal" style="left: 44.2927vw; width: 13.2057px; height: 19.1483px; --duration: 9.523667878711688s; background: radial-gradient(at 30% 25%, rgb(255, 230, 238), rgb(246, 166, 193) 60%, rgb(228, 124, 162));"></span><span class="falling-petal" style="left: 85.5407vw; font-size: 20.8037px; --fall-duration: 12.344384488741767s; animation-delay: 1.46451s; opacity: 0.458004;">❋</span><span class="real-petal" style="left: 87.6781vw; width: 9.75213px; height: 14.1406px; --duration: 8.414243679861965s; background: radial-gradient(at 30% 25%, rgb(255, 240, 245), rgb(243, 154, 184) 60%, rgb(216, 109, 150));"></span></div>
+  <div id="heartLayer" aria-hidden="true" bis_skin_checked="1"><span class="flying-heart" style="left: 73.0888vw; font-size: 22.1097px; --heart-duration: 10.545936332545727s;">♡</span><span class="flying-heart" style="left: 67.3788vw; font-size: 18.7719px; --heart-duration: 11.609637047075712s;">♥</span><span class="flying-heart" style="left: 64.601vw; font-size: 21.8583px; --heart-duration: 10.024845858153697s;">♡</span><span class="flying-heart" style="left: 50.1686vw; font-size: 20.1218px; --heart-duration: 11.964984580360454s;">♥</span></div>
+
+  <!-- Thanh đầu trang -->
+  <header class="topbar">
+    <a class="logo" href="https://project-8746123245605781687.web.app/#" id="homeLogo" aria-label="Về trang đầu">
+      Q<span>♡</span>M
+    </a>
+
+    <div class="top-label" bis_skin_checked="1">A LITTLE GIFT FOR YOU</div>
+
+    <div class="small-caption" style="margin:0" bis_skin_checked="1">
+      20 · 10
+    </div>
+  </header>
+
+  <div class="progress-track" aria-hidden="true" bis_skin_checked="1">
+    <div id="progressBar" bis_skin_checked="1" style="width: 20%;"></div>
+  </div>
+
+  <main id="mainContent">
+
+    <!-- ==========================
+         TRANG 1: MỞ ĐẦU
+    =========================== -->
+    <section class="page active" data-page="0" aria-hidden="false">
+      <div class="hero" bis_skin_checked="1">
+        <p class="eyebrow">OCTOBER 20TH · JUST FOR YOU</p>
+
+        <div class="hero-flower" aria-hidden="true" bis_skin_checked="1">✿</div>
+
+        <h1>
+          To my favorite<br>
+          <em>little person.</em>
+        </h1>
+
+        <p class="description">
+          Một món quà nhỏ, một chút chân thành<br>
+          dành riêng cho <strong>Tuyết Mai</strong> 💗
+        </p>
+
+        <button class="primary-button" type="button" data-next="">
+          Mở món quà nhé <span aria-hidden="true">↗</span>
+        </button>
+
+        <div class="bottom-note" bis_skin_checked="1">MADE WITH LOVE · 20.10</div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         TRANG 2: LỜI NHẮN
+    =========================== -->
+    <section class="page" data-page="1" aria-hidden="true">
+      <div class="page-content" bis_skin_checked="1">
+        <div class="page-number" bis_skin_checked="1">01 — A LITTLE THOUGHT</div>
+
+        <div class="ornament" aria-hidden="true" bis_skin_checked="1">❀</div>
+
+        <p class="eyebrow">MỘT CHÚT ĐIỀU TỚ MUỐN NÓI</p>
+
+        <h2>
+          Chỉ mong<br>
+          <em>bạn vui một chút.</em>
+        </h2>
+
+        <div class="divider" bis_skin_checked="1"><span>♡</span></div>
+
+        <p class="body-copy">
+          Tui đã dành một chút thời gian để làm trang web này.
+          Không phải vì nó có gì quá lớn lao, mà vì tui muốn
+          dành cho bạn một món quà mang dấu ấn riêng.
+        </p>
+
+        <p class="body-copy">
+          Mong rằng khi mở nó ra, cậu sẽ mỉm cười một chút.
+          Như thế là món quà này đã có ý nghĩa với tớ rồi.
+        </p>
+
+        <div class="navigation" bis_skin_checked="1">
+          <button class="text-button" type="button" data-prev="">
+            ← Quay lại
+          </button>
+
+          <button class="primary-button" type="button" data-next="">
+            Tiếp theo ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         TRANG 3: KỶ NIỆM NẮM TAY
+    =========================== -->
+    <section class="page" data-page="2" aria-hidden="true">
+      <div class="page-content" bis_skin_checked="1">
+        <div class="page-number" bis_skin_checked="1">02 — A MEMORY TO KEEP</div>
+
+        <div class="memory-art" aria-label="Hình minh họa trái tim" bis_skin_checked="1">
+          <div class="orbit orbit-a" bis_skin_checked="1"></div>
+          <div class="orbit orbit-b" bis_skin_checked="1"></div>
+          <div class="memory-heart" aria-hidden="true" bis_skin_checked="1">♡</div>
+          <span>one little memory</span>
+        </div>
+
+        <p class="eyebrow">MỘT KỶ NIỆM TỚ VẪN NHỚ</p>
+
+        <h2>
+          Lần đầu<br>
+          <em>hai đứa nắm tay.</em>
+        </h2>
+
+        <div class="divider" bis_skin_checked="1"><span>♡</span></div>
+
+        <p class="body-copy">
+          Tui vẫn nhớ lần đầu hai đứa nắm tay nhau.
+          Có những kỷ niệm chẳng cần kể quá nhiều,
+          chỉ cần nghĩ lại thôi cũng đủ để mình muốn
+          giữ chúng thật lâu.
+        </p>
+
+        <div class="memory-note" bis_skin_checked="1">
+          Có những khoảnh khắc nhỏ bé, nhưng lại trở thành
+          một phần đáng nhớ trong câu chuyện của hai đứa.
+        </div>
+
+        <p class="handwriting">Some moments stay with us. ♡</p>
+
+        <div class="navigation" bis_skin_checked="1">
+          <button class="text-button" type="button" data-prev="">
+            ← Quay lại
+          </button>
+
+          <button class="primary-button" type="button" data-next="">
+            Đọc tiếp ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         TRANG 4: LÁ THƯ 20/10
+    =========================== -->
+    <section class="page" data-page="3" aria-hidden="true">
+      <div class="page-content" bis_skin_checked="1">
+        <div class="page-number" bis_skin_checked="1">03 — A LETTER FOR YOU</div>
+
+        <article class="letter-paper">
+          <div class="paper-top" bis_skin_checked="1">
+            <span>DEAR TUYẾT MAI</span>
+            <span>20 · 10</span>
+          </div>
+
+          <div class="letter-flower" aria-hidden="true" bis_skin_checked="1">✿</div>
+
+          <h2>
+            Gửi bạn,<br>
+            <em>người hay bướng.</em>
+          </h2>
+
+          <div class="letter-body" bis_skin_checked="1">
+            <p>
+              Chúc bạn có một ngày 20/10 thật vui vẻ nha.
+              Mong bạn luôn có nhiều lý do để cười, gặp được
+              những điều dễ thương và có thật nhiều ngày bình yên.
+            </p>
+
+            <p>
+              Tui không giỏi nói những lời quá hoa mỹ, nhưng tui
+              vẫn muốn cậu biết rằng tui trân trọng những kỷ niệm
+              mà hai đứa đã có với nhau.
+            </p>
+
+            <p>
+              Cảm ơn cậu vì đã xuất hiện trong những ngày tháng
+              của tớ. Mong tụi mình sẽ còn cùng nhau kể những
+              chuyện linh tinh và tạo thêm nhiều kỷ niệm đẹp.
+            </p>
+
+            <p>
+              Bạn cứ là chính mình nha. Cứ vui vẻ, theo đuổi
+              những điều cậu thích và nhớ yêu thương bản thân nữa.
+            </p>
+
+          </div>
+
+          <div class="signature" bis_skin_checked="1">
+            <span>Thương gửi cậu,</span>
+            <strong>Quý ♡</strong>
+          </div>
+
+          <div class="paper-bottom" bis_skin_checked="1">
+            A LITTLE LETTER, WITH SINCERITY
+          </div>
+        </article>
+
+        <div class="navigation" bis_skin_checked="1">
+          <button class="text-button" type="button" data-prev="">
+            ← Quay lại
+          </button>
+
+          <button class="primary-button" type="button" data-next="">
+            Trang cuối ♡
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         TRANG 5: KẾT THÚC
+    =========================== -->
+    <section class="page" data-page="4" aria-hidden="true">
+      <div class="hero ending" bis_skin_checked="1">
+        <div class="ending-heart" aria-hidden="true" bis_skin_checked="1">♡</div>
+
+        <p class="eyebrow">ONE LAST THING</p>
+
+        <h1>
+          Mong cậu luôn<br>
+          <em>được yêu thương.</em>
+        </h1>
+
+        <p class="description">
+          Chúc Tuyết Mai có một ngày 20/10 thật đáng yêu.
+          Mong những điều dịu dàng sẽ luôn tìm đến bạn.
+        </p>
+
+        <div class="ending-flower" aria-hidden="true" bis_skin_checked="1">❀</div>
+
+        <p class="final-signature">Happy Women's Day ♡</p>
+        <p class="handwriting">Quý · 20.10</p>
+
+        <div class="navigation centered" bis_skin_checked="1">
+          <button class="text-button" type="button" data-prev="">
+            ← Quay lại
+          </button>
+
+          <button class="primary-button" id="restartButton" type="button">
+            Đọc lại từ đầu ↻
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>MADE FOR ONE PERSON</span>
+    <span aria-hidden="true">♡</span>
+    <span>20 · 10</span>
+  </footer>
+
+  <!-- Không còn audio và không còn nút nhạc cũ -->
+  <script src="./For Mew ♡_files/script.js.tải xuống"></script>
+
+
+</body></html>
